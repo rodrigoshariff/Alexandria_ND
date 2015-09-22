@@ -113,7 +113,7 @@ public final class MultiTrackerActivity extends AppCompatActivity {
     private void createCameraSource() {
 
 
-        Context context = getApplicationContext();
+        final Context context = getApplicationContext();
 
         // A face detector is created to track faces.  An associated multi-processor instance
         // is set to receive the face detection results, track the faces, and maintain graphics for
@@ -134,7 +134,22 @@ public final class MultiTrackerActivity extends AppCompatActivity {
                         .build();
 
 
-        BarcodeTrackerFactory barcodeFactory = new BarcodeTrackerFactory(mGraphicOverlay);
+
+/*        BarcodeTrackerFactory barcodeFactory = new BarcodeTrackerFactory(mGraphicOverlay);
+        barcodeDetector.setProcessor(
+                new MultiProcessor.Builder<>(barcodeFactory).build());*/
+
+        BarcodeTrackerFactory barcodeFactory = new BarcodeTrackerFactory(mGraphicOverlay, new GraphicTracker.Callback() {
+            @Override
+            public void onFound(String barcodeValue) {
+                Log.d(TAG, "Barcode in Multitracker = " + barcodeValue);
+
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
         barcodeDetector.setProcessor(
                 new MultiProcessor.Builder<>(barcodeFactory).build());
 
