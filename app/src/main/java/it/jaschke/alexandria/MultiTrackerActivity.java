@@ -145,6 +145,7 @@ public final class MultiTrackerActivity extends AppCompatActivity {
                 Log.d(TAG, "Barcode in Multitracker = " + barcodeValue);
 
                 Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra("barcodeValue",barcodeValue);
                 startActivity(intent);
 
             }

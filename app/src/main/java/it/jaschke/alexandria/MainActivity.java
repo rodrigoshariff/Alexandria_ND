@@ -57,7 +57,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
         // Set up the drawer.
         navigationDrawerFragment.setUp(R.id.navigation_drawer,
-                    (DrawerLayout) findViewById(R.id.drawer_layout));
+                (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
     @Override
@@ -78,6 +78,16 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 nextFragment = new About();
                 break;
 
+        }
+
+        Intent intentWithEan = getIntent();
+        if (intentWithEan!=null)
+        {
+            String barcodeValue = intentWithEan.getStringExtra("barcodeValue");
+            // Supply index input as an argument.
+            Bundle args = new Bundle();
+            args.putString("barcodeValue", barcodeValue);
+            nextFragment.setArguments(args);
         }
 
         fragmentManager.beginTransaction()

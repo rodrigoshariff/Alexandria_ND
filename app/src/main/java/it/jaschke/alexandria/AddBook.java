@@ -87,6 +87,14 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
             }
         });
 
+        Bundle arguments  = getArguments();
+        if (arguments  != null) {
+            String barcodeValue = getArguments().getString("barcodeValue");
+            ean.setText(barcodeValue);
+        }
+
+
+
         rootView.findViewById(R.id.scan_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
