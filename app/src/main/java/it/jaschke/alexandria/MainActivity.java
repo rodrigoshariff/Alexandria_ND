@@ -51,13 +51,32 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         IntentFilter filter = new IntentFilter(MESSAGE_EVENT);
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReciever,filter);
 
-        navigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        title = getTitle();
+            navigationDrawerFragment = (NavigationDrawerFragment)
+                    getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+            title = getTitle();
 
-        // Set up the drawer.
-        navigationDrawerFragment.setUp(R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+            // Set up the drawer.
+            navigationDrawerFragment.setUp(R.id.navigation_drawer,
+                    (DrawerLayout) findViewById(R.id.drawer_layout));
+
+
+        Intent intentWithEan = getIntent();
+        String barcodeValue = intentWithEan.getStringExtra("barcodeValue");
+        if (intentWithEan!=null && barcodeValue!=null)
+        {
+            Fragment BackToAddBookFragment = new AddBook();
+            //String barcodeValue = intentWithEan.getStringExtra("barcodeValue");
+            // Supply index input as an argument.
+            Bundle args = new Bundle();
+            args.putString("barcodeValue", barcodeValue);
+            BackToAddBookFragment.setArguments(args);
+            FragmentManager BackToAddBookfragmentManager = getSupportFragmentManager();
+            BackToAddBookfragmentManager.beginTransaction()
+                    .replace(R.id.container, BackToAddBookFragment)
+                    .addToBackStack((String) title)
+                    .commit();
+        }
+
     }
 
     @Override
@@ -80,15 +99,15 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
         }
 
-        Intent intentWithEan = getIntent();
-        if (intentWithEan!=null)
-        {
-            String barcodeValue = intentWithEan.getStringExtra("barcodeValue");
-            // Supply index input as an argument.
-            Bundle args = new Bundle();
-            args.putString("barcodeValue", barcodeValue);
-            nextFragment.setArguments(args);
-        }
+//        Intent intentWithEan = getIntent();
+//        if (intentWithEan!=null)
+//        {
+//            String barcodeValue = intentWithEan.getStringExtra("barcodeValue");
+//            // Supply index input as an argument.
+//            Bundle args = new Bundle();
+//            args.putString("barcodeValue", barcodeValue);
+//            nextFragment.setArguments(args);
+//        }
 
         fragmentManager.beginTransaction()
                 .replace(R.id.container, nextFragment)
